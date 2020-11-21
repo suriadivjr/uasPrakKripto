@@ -13,21 +13,23 @@ for i in range(0, len(plaintext)):
 
 print ("Your Plaintext is: " + str(plaintext_list))
 
-#triangle cipher encryyption
-def pascals_triangle(rows):
-	result = []
-	p = 1
-	q = 1
-	for count in range(rows):
-		row = []
-		for i in range(count + 1):
-			row.append(plaintext_list[count])
-			count += i+1
-		p += q
-		q += 1
-		result.append(row)
-	return result
+tingkat2 = 2
+tingkat1 = 1
+start = 0
+banyak_tingkat1 = 0
 
-# now we can print a result:
-for row in pascals_triangle(5):
-	print(row)
+while (tingkat1 < len(plaintext)):
+	tingkat1 = tingkat1 + tingkat2
+maks = int(math.sqrt(tingkat1))
+
+tingkat1 = 1
+ciphertext_start = []
+j = 0
+for i in range (0, maks):
+	ciphertext_start.append(start)
+	while (start < tingkat1):
+		print(plaintext_list[start])
+		start = start + 1
+	print ('-------')
+	start = start + tingkat1
+	tingkat1 = tingkat1 + tingkat2
