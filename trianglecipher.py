@@ -1,18 +1,12 @@
-# Python3 code to demonstrate 
-# Filling plaintextbets 
-# using naive method 
+plaintext_list = [] 
 
-# initializing empty list 
-plaintextlist = [] 
-
-# using naive method 
-# for filling plaintextbets 
-numberOfplaintextbets = int(input())
+#input
+number_of_alphabets = int(input())
 plaintext = str(input())
 
-for i in range(0, numberOfplaintextbets): 
-	plaintextlist.append(plaintext[i]) 
+#tokenizing and append to list
+for i in range(0, number_of_alphabets): 
+	plaintext_list.append(plaintext[i]) 
 	i = i + 1
 
-# printing resultant list 
-print ("List after insertion : " + str(plaintextlist)) 
+print ("List after insertion : " + str(plaintext_list)) 
