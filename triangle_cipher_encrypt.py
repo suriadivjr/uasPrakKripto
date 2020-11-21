@@ -1,11 +1,12 @@
+import string
+
 plaintext_list = [] 
 
 #input
-number_of_alphabets = int(input())
-plaintext = str(input())
+plaintext = str(input("Input Plaintext: "))
 
 #tokenizing and append to list
-for i in range(0, number_of_alphabets): 
+for i in range(0, len(plaintext)): 
 	plaintext_list.append(plaintext[i]) 
 	i = i + 1
 
