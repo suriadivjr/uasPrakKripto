@@ -1,13 +1,12 @@
-from tkinter import*
+from tkinter import * 
 import tkinter.messagebox
 import math
 
 root = Tk()
 
-entry1 = None;
-entry2 = None;
-hasilenkripsi = None;
-
+entry1 = StringVar()
+entry2 = StringVar()
+hasilenkripsi = StringVar()
 
 def enkripsi(input_teks, input_kunci):
     jumlah_kolom = len(input_kunci)
@@ -100,47 +99,44 @@ def dekripsi(input_teks, input_kunci):
         hasil_dekripsi = dekripsi(input_teks, input_kunci)
         print("Hasil dekripsi: " + hasil_dekripsi)"""
 
-
-        
-def dropdowncolenk():
-
-        label_1 = Label(root, text = "Masukkan Teks")
-        label_1.grid(row = 0, column=0)
-        
-        entry1 = Entry(root)
-        entry1.grid(row = 0, column=1)
-
-        label_2 = Label(root, text = "Masukkan Kunci")
-        label_2.grid(row = 1, column=0)
-
-        entry2 = Entry(root)
-        entry2.grid(row = 1, column=1)
-
-        hasil_Button = Button(root, text = "Enkripsi", command=colenk)
-        hasil_Button.grid(row = 2, column=0)
-
-        hasilenkripsi = Entry(root)
-        hasilenkripsi.grid(row = 2, column=1)
-        """topframe = Frame(root)
-        topframe.pack()
-        button1 = Button(topframe, text = "Columnar", fg = "red")
-        button1.pack()"""
-
 def dropdown():
         print("hasilnya...")
 
 def colenk():
-   
-    teks = str(entry1.get())
-    kunci = str(entry2.get())
+    teks = entry1.get()
+    kunci = entry2.get()
+    print(entry1.get())
+    print(entry2.get())
 
-    hasil_enkripsi = enkripsi(teks, kunci)
+    hasil_enkripsi = enkripsi(teks, kunci)  
     hasilenkripsi.set(hasil_enkripsi)
-
+    print(hasilenkripsi.get())     
     
 def coldek():
     hasil_dekripsi = dekripsi(input_teks, input_kunci)
     hasildekripsi(0,hasil_dekripsi)
+
+def dropdowncolenk():
+    
+        label_1 = Label(root, text = "Masukkan Teks")
+        label_1.grid(row = 0, column=0)
+        
+        Entry(root, textvariable = entry1).grid(row=0, column=1, sticky=E) #entry textbox
+        
+        label_2 = Label(root, text = "Masukkan Kunci")
+        label_2.grid(row = 1, column=0)
+        
+        Entry(root, textvariable = entry2).grid(row=1, column=1, sticky=E) #entry textbox
+
+        hasil_Button = Button(root, text = "Enkripsi", command=colenk)
+        hasil_Button.grid(row = 2, column=0)
+
+        Label(root, textvariable = hasilenkripsi).grid(row=2, column=1, sticky=E) #entry textbox
+        
+        """topframe = Frame(root)
+        topframe.pack()
+        button1 = Button(topframe, text = "Columnar", fg = "red")
+        button1.pack()"""
 
 def main():
     """print("Masukkan mode (1 untuk enkripsi, 2 untuk dekripsi) : ")
