@@ -39,43 +39,7 @@ def enkripsi(barismaks, plaintext, kolom, baris):
 
     return hasil_enkripsi
 
-def dekripsi(barismaks, plaintext, kolom, baris):
-    array = [['' for y in range(int(kolom))] for x in range(int(baris))]
-    hasil_dekripsi = ''
-    penghitung_string = 0
-    dikunjungi = [False for x in range(kolom)]
-
-    for j in range(0, barismaks):
-        if dikunjungi[j] == False and j < barismaks:
-            penghitung_kosong = 1
-            for k in range(barismaks):
-
-                if penghitung_string == len(plaintext):
-                    break
-
-                if j >= barismaks - penghitung_kosong:
-                    array[k][j] = plaintext[penghitung_string]
-                    penghitung_string = penghitung_string + 1
-                penghitung_kosong = penghitung_kosong + 1    
-                
-            dikunjungi[j] = True
-
-    for j in range(barismaks, kolom):
-        penghitung_kosong = 0
-        for k in range(1, barismaks):
-            if penghitung_string == len(plaintext):
-                break
-
-            if j <= penghitung_kosong + barismaks:
-                array[k][j] = plaintext[penghitung_string]
-                penghitung_string =  penghitung_string + 1
-            penghitung_kosong = penghitung_kosong + 1 
-
-    for i in range(baris):
-        for j in range(kolom):
-            if array[i][j] != '':
-                hasil_dekripsi = hasil_dekripsi + array[i][j]
-    return hasil_dekripsi
+c
 
 def main():
     plaintext = 'ikanhiumakantomat'

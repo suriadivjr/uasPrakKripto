@@ -1,14 +1,18 @@
 from tkinter import * 
 import tkinter.messagebox
 import math
+import string
 
 root = Tk()
+
+root.geometry('1000x500')
 
 entry1 = StringVar()
 entry2 = StringVar()
 hasilenkripsi = StringVar()
+hasildekripsi = StringVar()
 
-def enkripsi(input_teks, input_kunci):
+def enkripsicolumnar(input_teks, input_kunci):
     jumlah_kolom = len(input_kunci)
     jumlah_baris = math.ceil(len(input_teks)/jumlah_kolom)
     matriks_inisialisasi =[['x' for y in range(jumlah_kolom)]
@@ -47,10 +51,9 @@ def enkripsi(input_teks, input_kunci):
 
     return hasil_enkripsi
 
-def dekripsi(input_teks, input_kunci):
+def dekripsicolumnar(input_teks, input_kunci):
     jumlah_kolom = len(input_kunci)
     jumlah_baris = math.ceil(len(input_teks)/jumlah_kolom)
-    print(jumlah_baris)
     matriks_inisialisasi =[['x' for y in range(jumlah_kolom)]
                         for x in range(jumlah_baris)]
     dikunjungi = [False for x in range(jumlah_kolom)]
@@ -90,35 +93,120 @@ def dekripsi(input_teks, input_kunci):
 
     return hasil_dekripsi
 
-"""def columnar(input_mode, input_teks, input_kunci):
-    if input_mode == '1':
-        hasil_enkripsi = enkripsi(input_teks, input_kunci)
-        print("Hasil enkripsi : " + hasil_enkripsi)
+def colenk():
+    teks = entry1.get()
+    kunci = entry2.get()
 
-    elif input_mode == '2':
-        hasil_dekripsi = dekripsi(input_teks, input_kunci)
-        print("Hasil dekripsi: " + hasil_dekripsi)"""
+    hasil_enkripsi = enkripsicolumnar(teks, kunci)  
+    hasilenkripsi.set(hasil_enkripsi)   
+    
+def coldek():
+    teks = entry1.get()
+    kunci = entry2.get()
+
+    hasil_dekripsi = dekripsicolumnar(teks, kunci)  
+    hasildekripsi.set(hasil_dekripsi)
+
+def baris_maks(panjang_plaintext):
+    pola1 = 1
+    pola2 = 2 
+    while (pola1 < panjang_plaintext):
+        pola1 = pola1 + pola2
+    return math.ceil(math.sqrt(pola1))
+
+
+def enkripsitriangle(barismaks, plaintext, kolom, baris):
+    array = [['' for y in range(int(kolom))] for x in range(int(baris))]
+    penghitung_string = 0
+    hasil_enkripsi = ''
+    dikunjungi = [False for x in range(kolom)]
+
+    for i in range(int(baris)):
+        kolom_mulai = baris - i - 1
+        for j in range(int(kolom)):
+            if (j >= kolom_mulai and j < kolom - kolom_mulai) and len(plaintext) >= penghitung_string:   
+                if penghitung_string >= len(plaintext):
+                    array[i][j] = 'x'
+                else:
+                    array[i][j] = plaintext[penghitung_string]
+                    penghitung_string = penghitung_string + 1
+        if penghitung_string == len(plaintext):
+            break
+
+    for i in range(int(baris)):
+        for j in range(int(kolom)):
+            if dikunjungi[j] == False:
+                for k in range(int(baris)):
+                    if array[k][j] != '':
+                        hasil_enkripsi = hasil_enkripsi + array[k][j]
+                dikunjungi[j] = True
+            else:
+                continue
+
+    return hasil_enkripsi
+
+def dekripsitriangle(barismaks, plaintext, kolom, baris):
+    array = [['' for y in range(int(kolom))] for x in range(int(baris))]
+    hasil_dekripsi = ''
+    penghitung_string = 0
+    dikunjungi = [False for x in range(kolom)]
+
+    for j in range(0, barismaks):
+        if dikunjungi[j] == False and j < barismaks:
+            penghitung_kosong = 1
+            for k in range(barismaks):
+
+                if penghitung_string == len(plaintext):
+                    break
+
+                if j >= barismaks - penghitung_kosong:
+                    array[k][j] = plaintext[penghitung_string]
+                    penghitung_string = penghitung_string + 1
+                penghitung_kosong = penghitung_kosong + 1    
+                
+            dikunjungi[j] = True
+
+    for j in range(barismaks, kolom):
+        penghitung_kosong = 0
+        for k in range(1, barismaks):
+            if penghitung_string == len(plaintext):
+                break
+
+            if j <= penghitung_kosong + barismaks:
+                array[k][j] = plaintext[penghitung_string]
+                penghitung_string =  penghitung_string + 1
+            penghitung_kosong = penghitung_kosong + 1 
+
+    for i in range(baris):
+        for j in range(kolom):
+            if array[i][j] != '':
+                hasil_dekripsi = hasil_dekripsi + array[i][j]
+    return hasil_dekripsi
+
+def trienk():
+    teks = entry1.get()
+    panjang_plaintext = len(teks)
+    barismaks = baris_maks(panjang_plaintext)
+    kolom, baris = 2 * barismaks - 1, barismaks
+    
+    hasil_enkripsi = enkripsitriangle(barismaks, teks, kolom, baris)  
+    hasilenkripsi.set(hasil_enkripsi)  
+
+def tridek():
+    teks = entry1.get()
+    panjang_ciphertext = len(teks)
+    barismaks = baris_maks(panjang_ciphertext)
+    kolom, baris = 2 * barismaks - 1, barismaks
+
+    hasil_dekripsi = dekripsitriangle(barismaks, teks, kolom, baris)  
+    hasildekripsi.set(hasil_dekripsi)
 
 def dropdown():
         print("hasilnya...")
 
-def colenk():
-    teks = entry1.get()
-    kunci = entry2.get()
-    print(entry1.get())
-    print(entry2.get())
-
-    hasil_enkripsi = enkripsi(teks, kunci)  
-    hasilenkripsi.set(hasil_enkripsi)
-    print(hasilenkripsi.get())     
-    
-def coldek():
-    hasil_dekripsi = dekripsi(input_teks, input_kunci)
-    hasildekripsi(0,hasil_dekripsi)
-
 def dropdowncolenk():
-    
-        label_1 = Label(root, text = "Masukkan Teks")
+        
+        label_1 = Label(root, text = "Masukkan PlainTeks")
         label_1.grid(row = 0, column=0)
         
         Entry(root, textvariable = entry1).grid(row=0, column=1, sticky=E) #entry textbox
@@ -133,44 +221,78 @@ def dropdowncolenk():
 
         Label(root, textvariable = hasilenkripsi).grid(row=2, column=1, sticky=E) #entry textbox
         
-        """topframe = Frame(root)
-        topframe.pack()
-        button1 = Button(topframe, text = "Columnar", fg = "red")
-        button1.pack()"""
+
+def dropdowncoldek():
+
+        label_1 = Label(root, text = "Masukkan Ciphertext")
+        label_1.grid(row = 0, column=0)
+        
+        Entry(root, textvariable = entry1).grid(row=0, column=1, sticky=E) #entry textbox
+        
+        label_2 = Label(root, text = "Masukkan Kunci")
+        label_2.grid(row = 1, column=0)
+        
+        Entry(root, textvariable = entry2).grid(row=1, column=1, sticky=E) #entry textbox
+
+        hasil_Button = Button(root, text = "Dekripsi", command=coldek)
+        hasil_Button.grid(row = 2, column=0)
+
+        Label(root, textvariable = hasildekripsi).grid(row=2, column=1, sticky=E) #entry textbox
+
+def dropdowntrienk():
+        
+        label_1 = Label(root, text = "Masukkan Teks")
+        label_1.grid(row = 0, column=0)
+        
+        Entry(root, textvariable = entry1).grid(row=0, column=1, sticky=E) #entry textbox
+
+        hasil_Button = Button(root, text = "Enkripsi", command=trienk)
+        hasil_Button.grid(row = 2, column=0)
+
+        Label(root, textvariable = hasilenkripsi).grid(row=2, column=1, sticky=E) #entry textbox
+
+def dropdowntridek():
+    
+        label_1 = Label(root, text = "Masukkan Ciphertext")
+        label_1.grid(row = 0, column=0)
+        
+        Entry(root, textvariable = entry1).grid(row=0, column=1, sticky=E) #entry textbox
+        
+
+        hasil_Button = Button(root, text = "Dekripsi", command=tridek)
+        hasil_Button.grid(row = 2, column=0)
+
+        Label(root, textvariable = hasildekripsi).grid(row=2, column=1, sticky=E) #entry textbox
+
+#def reset():
+#    destroy(Label)
+#    destroy(Entry)
 
 def main():
-    """print("Masukkan mode (1 untuk enkripsi, 2 untuk dekripsi) : ")
-    input_mode = input()
-    if input_mode != '1' or input_mode != 2:
-        print("Input salah!")
-
-    print("Masukkan teks : ")
-    input_teks = input()
-
-    print("Masukkan kunci : ")
-    input_kunci = input()
-
-    columnar(input_mode, input_teks, input_kunci)"""    
-
+    label_1 = Label(root, text = "CALCULATOR CRYPTOGRAPHY : COLUMNAR & TRIANGLE")
     menu = Menu(root)
     root.config(menu = menu)
-
+   
     columnarmenu = Menu(menu)
     menu.add_cascade(label = "Columnar", menu = columnarmenu)
+    
     columnarmenu.add_command(label = "Enkripsi", command = dropdowncolenk)
-    columnarmenu.add_command(label = "Dekripsi", command = dropdown)
+    columnarmenu.add_command(label = "Dekripsi", command = dropdowncoldek)
     columnarmenu.add_separator()
-    columnarmenu.add_command(label = "Exit", command = dropdown)
+    #columnarmenu.add_command(label = "Reset", command = reset)
+    columnarmenu.add_command(label = "Exit", command = root.destroy)
 
     trianglemenu = Menu(menu)
     menu.add_cascade(label = "Triangle", menu = trianglemenu)
-    trianglemenu.add_command(label = "Enkripsi", command = dropdown)
-    trianglemenu.add_command(label = "Dekripsi", command = dropdown)
+    trianglemenu.add_command(label = "Enkripsi", command = dropdowntrienk)
+    trianglemenu.add_command(label = "Dekripsi", command = dropdowntridek)
     trianglemenu.add_separator()
-    trianglemenu.add_command(label = "Exit", command = dropdown)
+    trianglemenu.add_command(label = "Exit", command = root.destroy)
+    trianglemenu.add_separator()
 
-
+    label_1 = Label(root, text = "CALCULATOR CRYPTOGRAPHY : COLUMNAR & TRIANGLE")
     root.mainloop()
+    
     
 if __name__ == "__main__":
     main()
