@@ -45,7 +45,7 @@ def dekripsi(barismaks, plaintext, kolom, baris):
     penghitung_string = 0
     dikunjungi = [False for x in range(kolom)]
 
-    for j in range(kolom):
+    for j in range(0, barismaks):
         if dikunjungi[j] == False and j < barismaks:
             penghitung_kosong = 1
             for k in range(barismaks):
@@ -60,61 +60,22 @@ def dekripsi(barismaks, plaintext, kolom, baris):
                 
             dikunjungi[j] = True
 
-            
-        elif dikunjungi[j] == False and j > barismaks:
-              
-            penghitung_kosong = barismaks - 1
-        
-            for k in range(barismaks):
-                print(k)
-                print(j)
-                if penghitung_string == len(plaintext):
-                    break
+    for j in range(barismaks, kolom):
+        penghitung_kosong = 0
+        for k in range(1, barismaks):
+            if penghitung_string == len(plaintext):
+                break
 
-                if j <= barismaks - penghitung_kosong:
-                    array[k][j] = plaintext[penghitung_string]
-                    penghitung_string = penghitung_string + 1
-                penghitung_kosong = penghitung_kosong - 1
-                
-            dikunjungi[j] = True
-
-        if penghitung_string == len(plaintext):
-            break
-
-    """"
-    for i in range(kolom):
-        if penghitung_string == len(plaintext):
-            break
-        if i < barismaks:
-            penghitung_kosong = 1
-            for j in range(barismaks):
-                if penghitung_string == len(plaintext):
-                    break
-                if j >= barismaks - penghitung_kosong:
-                    array[i][j] = plaintext[penghitung_string]
-                    penghitung_string = penghitung_string + 1
-            penghitung_kosong = penghitung_kosong + 1    
-        else:
-            penghitung_kosong = barismaks - 1
-        
-            for j in range(barismaks):
-                if penghitung_string == len(plaintext):
-                    break
-
-                if j >= barismaks - penghitung_kosong:
-                    array[i][j] = plaintext[penghitung_string]
-                    penghitung_string = penghitung_string + 1
-
-        penghitung_kosong = penghitung_kosong - 1
-"""    
-    return array
+            if j <= penghitung_kosong + barismaks:
+                array[k][j] = plaintext[penghitung_string]
+                penghitung_string =  penghitung_string + 1
+            penghitung_kosong = penghitung_kosong + 1 
 
     for i in range(baris):
         for j in range(kolom):
             if array[i][j] != '':
                 hasil_dekripsi = hasil_dekripsi + array[i][j]
-
-    
+    return hasil_dekripsi
 
 def main():
     plaintext = 'ikanhiumakantomat'
@@ -128,7 +89,6 @@ def main():
     barismaks = baris_maks(panjang_ciphertext)
     kolom, baris = 2 * barismaks - 1, barismaks
     print(dekripsi(barismaks, ciphertext, kolom, baris))
-
 
 if __name__ == "__main__":
     main()
