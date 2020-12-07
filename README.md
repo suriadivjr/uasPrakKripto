@@ -6,4 +6,4 @@
 
 ![enkripsi-triangle](https://user-images.githubusercontent.com/47997250/101350986-7a347080-38c2-11eb-8fa6-4118555703ba.JPG)
 
-![dekripsi-columnar](https://user-images.githubusercontent.com/47997250/101351014-87515f80-38c2-11eb-8de5-6c4f09dd95aa.JPG)
+![dekripsi-triangle](https://user-images.githubusercontent.com/47997250/101351493-3ee67180-38c3-11eb-8f9c-43ba5810703d.JPG)
